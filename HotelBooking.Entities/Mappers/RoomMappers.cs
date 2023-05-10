@@ -8,18 +8,22 @@ namespace HotelBooking.Entities.Mappers
 	{
 		public static Room MapToRoom(this RoomDTO roomDTO)
 		{
-			return new Room
+			return roomDTO == null ? null : new Room
 			{
-				RoomId = roomDTO.RoomId
-			};
+				RoomId = roomDTO.RoomId,
+				StartReservation = roomDTO.StartReservation,
+				EndReservation = roomDTO.EndReservation
+            };
 		}
 
         public static RoomDTO MapToRoomDTO(this Room room)
         {
-			return new RoomDTO
+			return room == null ? null : new RoomDTO
 			{
-				RoomId = room.RoomId
-			};
+				RoomId = room.RoomId,
+                StartReservation = room.StartReservation,
+                EndReservation = room.EndReservation
+            };
         }
     }
 }

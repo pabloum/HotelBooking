@@ -1,33 +1,47 @@
 ﻿using System;
+using HotelBooking.Entities.Domain;
 using HotelBooking.Repository.Contracts;
 
 namespace HotelBooking.Repository
 {
 	public class RoomRepository : IRoomRepository
 	{
-        public string SeeReservations()
+        private List<Room> _inMemoryRoom;
+
+        public RoomRepository()
         {
-            return "See Room";
+            _inMemoryRoom = new List<Room>
+            {
+                new Room { RoomId = 1, StartReservation = DateTime.Parse("2023-06-01"), EndReservation = DateTime.Parse("2023-06-15")}
+            };
         }
 
-        public string GetReservationById(int id)
+        public IEnumerable<Room> SeeReservations()
         {
-            return "Get Reservation";
+            return _inMemoryRoom;
         }
 
-        public string MakeReservation(int id)
+        public Room GetReservationById(int id)
         {
-            return "Make Reservation";
+            return _inMemoryRoom.Where(r => r.RoomId == id).FirstOrDefault();
         }
 
-        public string UpdatePutReservation(int id)
+        public Room MakeReservation(Room newReservation)
         {
-            return "Update put reservation";
+            var id = _inMemoryRoom.Select(r => r.RoomId).Max() + 1;
+            newReservation.RoomId = id;
+            _inMemoryRoom.Add(newReservation);
+            return _inMemoryRoom.Where(r => r.RoomId == id).FirstOrDefault();
         }
 
-        public string UpdatePatchReservation(int id)
+        public Room UpdatePutReservation(int id)
         {
-            return "Update patch Reservation";
+            return _inMemoryRoom.Where(r => r.RoomId == id).FirstOrDefault();
+        }
+
+        public Room UpdatePatchReservation(int id)
+        {
+            return _inMemoryRoom.Where(r => r.RoomId == id).FirstOrDefault();
         }
 
         public string CancelReservation(int id)

@@ -1,4 +1,7 @@
 ﻿using System;
+using HotelBooking.Entities.Domain;
+using HotelBooking.Entities.DTO;
+using HotelBooking.Entities.Mappers;
 using HotelBooking.Repository.Contracts;
 using HotelBooking.Services.Services.Contracts;
 
@@ -13,29 +16,30 @@ namespace HotelBooking.Services.Services
 			_roomRepository = roomRepository;
         }
 
-		public string SeeReservations()
+		public IEnumerable<RoomDTO> SeeReservations()
 		{
-			return _roomRepository.SeeReservations();
+			return _roomRepository.SeeReservations().Select(r => r.MapToRoomDTO());
 		}
 
-        public string GetReservationById(int id)
+        public RoomDTO GetReservationById(int id)
 		{
-			return _roomRepository.GetReservationById(id);
+			return _roomRepository.GetReservationById(id).MapToRoomDTO();
 		}
 
-		public string MakeReservation(int id)
+		public RoomDTO MakeReservation(RoomDTO newReservationDto)
 		{
-			return _roomRepository.MakeReservation(id);
+			var newReservation = newReservationDto.MapToRoom();
+            return _roomRepository.MakeReservation(newReservation).MapToRoomDTO();
         }
 
-		public string UpdatePutReservation(int id)
+		public RoomDTO UpdatePutReservation(int id)
 		{
-			return _roomRepository.UpdatePutReservation(id);
+			return _roomRepository.UpdatePutReservation(id).MapToRoomDTO();
         }
 
-		public string UpdatePatchReservation(int id)
+		public RoomDTO UpdatePatchReservation(int id)
 		{
-			return _roomRepository.UpdatePatchReservation(id);
+			return _roomRepository.UpdatePatchReservation(id).MapToRoomDTO();
         }
 
 		public string CancelReservation(int id)
