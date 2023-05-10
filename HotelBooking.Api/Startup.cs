@@ -26,6 +26,7 @@ namespace HotelBooking.Api
             });
 
             services.AddBusinessServices();
+            services.InjectAdditionalInterfaces();
         }
 
         public void Configure(WebApplication app, IWebHostEnvironment env)

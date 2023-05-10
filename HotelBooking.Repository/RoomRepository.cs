@@ -1,52 +1,48 @@
 ﻿using System;
 using HotelBooking.Entities.Domain;
 using HotelBooking.Repository.Contracts;
+using HotelBooking.Repository.InMemoryData;
 
 namespace HotelBooking.Repository
 {
-	public class RoomRepository : IRoomRepository
+    public class RoomRepository : IRoomRepository
 	{
-        private List<Room> _inMemoryRoom;
+        private IInMemoryData _inMemoryData;
 
-        public RoomRepository()
+        public RoomRepository(IInMemoryData inMemoryData)
         {
-            _inMemoryRoom = new List<Room>
-            {
-                new Room { RoomId = 1, StartReservation = DateTime.Parse("2023-06-01"), EndReservation = DateTime.Parse("2023-06-15")}
-            };
+            _inMemoryData = inMemoryData;
         }
 
         public IEnumerable<Room> SeeReservations()
         {
-            return _inMemoryRoom;
+            return _inMemoryData.GetAll();
         }
 
         public Room GetReservationById(int id)
         {
-            return _inMemoryRoom.Where(r => r.RoomId == id).FirstOrDefault();
+            return _inMemoryData.GetById(id);
         }
 
         public Room MakeReservation(Room newReservation)
         {
-            var id = _inMemoryRoom.Select(r => r.RoomId).Max() + 1;
-            newReservation.RoomId = id;
-            _inMemoryRoom.Add(newReservation);
-            return _inMemoryRoom.Where(r => r.RoomId == id).FirstOrDefault();
+            return _inMemoryData.Add(newReservation);
         }
 
         public Room UpdatePutReservation(int id)
         {
-            return _inMemoryRoom.Where(r => r.RoomId == id).FirstOrDefault();
+            return _inMemoryData.GetById(id);
         }
 
         public Room UpdatePatchReservation(int id)
         {
-            return _inMemoryRoom.Where(r => r.RoomId == id).FirstOrDefault();
+            return _inMemoryData.GetById(id);
         }
 
         public string CancelReservation(int id)
         {
-            return "Cancel Reservation";
+            _inMemoryData.Remove(id);
+            return "Reservation canceled";
         }
     }
 }
