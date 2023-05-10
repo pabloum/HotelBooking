@@ -25,7 +25,7 @@ namespace HotelBooking.Api
                 c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Last hotel in Cancun Booking", Version = "v1" });
             });
 
-            //services.AddBusinessServices();
+            services.AddBusinessServices();
         }
 
         public void Configure(WebApplication app, IWebHostEnvironment env)

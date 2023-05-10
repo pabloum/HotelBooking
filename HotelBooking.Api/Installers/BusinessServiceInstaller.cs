@@ -1,11 +1,17 @@
 ﻿using System;
+using HotelBooking.Services.Base;
+
 namespace HotelBooking.Api.Installers
 {
-	public class BusinessServiceInstaller
-	{
-		public BusinessServiceInstaller()
-		{
-		}
-	}
+    public static class BusinessServiceInstaller
+    {
+        public static void AddBusinessServices(this IServiceCollection services/*, IConfigurationProvider configuration*/)
+        {
+            services.RegisterAllDirectImplementations<IService>(ServiceLifetime.Scoped);
+            //services.RegisterAllDirectImplementations<IRepository>(ServiceLifetime.Scoped);
+
+            //services.AddDbContext<PlannerDbContext>(options => options.UseSqlServer("connectionString"));
+        }
+    }
 }
 
