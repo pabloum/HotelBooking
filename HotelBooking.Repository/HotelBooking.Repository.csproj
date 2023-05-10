@@ -7,17 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Services\" />
-    <None Remove="Services\Contracts\" />
-    <None Remove="Services\Base\" />
+    <None Remove="Base\" />
+    <None Remove="Contracts\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Services\" />
-    <Folder Include="Services\Contracts\" />
-    <Folder Include="Services\Base\" />
+    <Folder Include="Base\" />
+    <Folder Include="Contracts\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HotelBooking.Repository\HotelBooking.Repository.csproj" />
     <ProjectReference Include="..\HotelBooking.Entities\HotelBooking.Entities.csproj" />
   </ItemGroup>
 </Project>

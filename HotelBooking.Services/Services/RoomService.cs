@@ -1,44 +1,47 @@
 ﻿using System;
+using HotelBooking.Repository.Contracts;
 using HotelBooking.Services.Services.Contracts;
 
 namespace HotelBooking.Services.Services
 {
 	public class RoomService : IRoomService
     {
-		public RoomService()
+		private readonly IRoomRepository _roomRepository;
+
+        public RoomService(IRoomRepository roomRepository)
 		{
-		}
+			_roomRepository = roomRepository;
+        }
 
 		public string SeeReservations()
 		{
-			return "See Room";
+			return _roomRepository.SeeReservations();
 		}
 
         public string GetReservationById(int id)
 		{
-			return "Get Reservation";
+			return _roomRepository.GetReservationById(id);
 		}
 
 		public string MakeReservation(int id)
 		{
-			return "Make Reservation";
-		}
+			return _roomRepository.MakeReservation(id);
+        }
 
 		public string UpdatePutReservation(int id)
 		{
-			return "Update put reservation";
-		}
+			return _roomRepository.UpdatePutReservation(id);
+        }
 
 		public string UpdatePatchReservation(int id)
 		{
-			return "Update patch Reservation";
-		}
+			return _roomRepository.UpdatePatchReservation(id);
+        }
 
 		public string CancelReservation(int id)
 		{
-			return "Cancel Reservation";
-		}
-
+			return _roomRepository.CancelReservation(id);
+        }
 	}
 }
 
