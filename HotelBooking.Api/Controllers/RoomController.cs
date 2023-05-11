@@ -23,7 +23,7 @@ namespace HotelBooking.Api.Controllers
             return Ok(result);
         }
 
-        [HttpGet("GetAllReservations/{id}")]
+        [HttpGet("GetMyReservation/{id}")]
         public ActionResult<RoomDTO> GetReservationById(int id)
         {
             var result = _roomService.GetReservationById(id);
