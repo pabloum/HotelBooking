@@ -38,16 +38,16 @@ namespace HotelBooking.Api.Controllers
         }
 
         [HttpPut("Update/{id}")]
-        public ActionResult<RoomDTO> UpdatePutReservation(int id)
+        public ActionResult<RoomDTO> UpdatePutReservation(int id, [FromBody] RoomDTO roomDTO)
         {
-            var result = _roomService.UpdatePutReservation(id);
+            var result = _roomService.UpdatePutReservation(id, roomDTO);
             return Ok(result);
         }
 
         [HttpPatch("UpdateAll/{id}")]
-        public ActionResult<RoomDTO> UpdatePatchReservation(int id)
+        public ActionResult<RoomDTO> UpdatePatchReservation(int id, [FromBody] RoomDTO roomDTO)
         {
-            var result = _roomService.UpdatePatchReservation(id);
+            var result = _roomService.UpdatePatchReservation(id, roomDTO);
             return Ok(result);
         }
 
