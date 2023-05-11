@@ -31,43 +31,25 @@ namespace HotelBooking.Services.Services
 		public RoomDTO MakeReservation(RoomDTO newReservationDto)
 		{
 			var newReservation = newReservationDto.MapToRoom();
-
-			if (_reservationValidationService.IsReservationPossible(newReservation))
-			{
-				return _roomRepository.MakeReservation(newReservation).MapToRoomDTO();
-			}
-			else
-			{
-				throw new Exception("Reservation was not possible");
-			}
+			_reservationValidationService.IsReservationPossible(newReservation);
+			return _roomRepository.MakeReservation(newReservation).MapToRoomDTO();
+			
         }
 
 		public RoomDTO UpdatePutReservation(int id, RoomDTO updatedReservationDto)
 		{
             var newReservation = updatedReservationDto.MapToRoom();
 
-            if (_reservationValidationService.IsReservationPossible(newReservation))
-            {
-				return _roomRepository.UpdatePutReservation(id).MapToRoomDTO();
-            }
-            else
-            {
-                throw new Exception("Reservation was not possible. Your original reservation is active");
-            }
+            _reservationValidationService.IsReservationPossible(newReservation);
+            return _roomRepository.UpdatePutReservation(id).MapToRoomDTO();
         }
 
 		public RoomDTO UpdatePatchReservation(int id, RoomDTO updatedReservationDto)
 		{
             var newReservation = updatedReservationDto.MapToRoom();
 
-            if (_reservationValidationService.IsReservationPossible(newReservation))
-            {
-				return _roomRepository.UpdatePatchReservation(id).MapToRoomDTO();
-            }
-            else
-            {
-                throw new Exception("Reservation was not possible. Your original reservation is active");
-            }
+            _reservationValidationService.IsReservationPossible(newReservation);
+            return _roomRepository.UpdatePatchReservation(id).MapToRoomDTO();
         }
 
 		public string CancelReservation(int id)

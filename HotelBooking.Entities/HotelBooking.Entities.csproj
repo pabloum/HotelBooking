@@ -10,10 +10,12 @@
     <None Remove="Domain\" />
     <None Remove="DTO\" />
     <None Remove="Mappers\" />
+    <None Remove="Exceptions\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Domain\" />
     <Folder Include="DTO\" />
     <Folder Include="Mappers\" />
+    <Folder Include="Exceptions\" />
   </ItemGroup>
 </Project>
