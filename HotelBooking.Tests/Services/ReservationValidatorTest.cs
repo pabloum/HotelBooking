@@ -15,11 +15,10 @@ namespace HotelBooking.Tests.Services
 	public class ReservationValidatorTest
 	{
 		private IReservationValidationService _reservationValidator;
-		private Mock<IRoomRepository> _mockRepository;
 
 		public ReservationValidatorTest()
 		{
-			_mockRepository = new Mock<IRoomRepository>();
+			var _mockRepository = new Mock<IRoomRepository>();
 			_mockRepository.Setup(r => r.SeeReservations()).Returns(MockedDataFactory.GetMockedRooms());
 
 			var timeProviderMock = new Mock<ITimeProvider>();
@@ -57,9 +56,65 @@ namespace HotelBooking.Tests.Services
 
 			//Act and Assert
 			var ex = Assert.Throws<ValidationException.ValidationException>(() => _reservationValidator.IsReservationPossible(room));
+
+			//Assert
 			Assert.Equal(ex.Message, Constants.Error_Generic);
 			Assert.Equal(ex.ValidationErrors.FirstOrDefault().Message, Constants.Error_UnavailableDates);
         }
-	}
+
+        [Fact]
+        public void TestEndDaterBeforeStartDate()
+        {
+            //Arrange
+            var room = new Room
+            {
+                StartReservation = new DateTime(2023, 09, 11),
+                EndReservation = new DateTime(2023, 09, 09),
+            };
+
+            //Act and Assert
+            var ex = Assert.Throws<ValidationException.ValidationException>(() => _reservationValidator.IsReservationPossible(room));
+
+			//Assert
+			Assert.Equal(ex.Message, Constants.Error_Generic);
+            Assert.Equal(ex.ValidationErrors.FirstOrDefault().Message, Constants.Error_NonLogicalEndDate);
+        }
+
+        [Fact]
+        public void TestReservationLongerThan3Days()
+        {
+            //Arrange
+            var room = new Room
+            {
+                StartReservation = new DateTime(2023, 09, 20),
+                EndReservation = new DateTime(2023, 09, 25),
+            };
+
+            //Act and Assert
+            var ex = Assert.Throws<ValidationException.ValidationException>(() => _reservationValidator.IsReservationPossible(room));
+
+            //Assert
+            Assert.Equal(ex.Message, Constants.Error_Generic);
+            Assert.Equal(ex.ValidationErrors.FirstOrDefault().Message, Constants.Error_ReservationMoreThan3Days);
+        }
+
+        [Fact]
+        public void TestReservation30DaysInAdvance()
+        {
+            //Arrange
+            var room = new Room
+            {
+                StartReservation = new DateTime(2023, 10, 20),
+                EndReservation = new DateTime(2023, 10, 22),
+            };
+
+            //Act and Assert
+            var ex = Assert.Throws<ValidationException.ValidationException>(() => _reservationValidator.IsReservationPossible(room));
+
+            //Assert
+            Assert.Equal(ex.Message, Constants.Error_Generic);
+            Assert.Equal(ex.ValidationErrors.FirstOrDefault().Message, Constants.Error_MoreThan30DaysInAdvance);
+        }
+    }
 }
     
