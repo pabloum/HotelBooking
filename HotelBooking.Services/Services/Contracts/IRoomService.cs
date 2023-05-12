@@ -11,7 +11,6 @@ namespace HotelBooking.Services.Services.Contracts
         RoomDTO GetReservationById(int id);
         RoomDTO MakeReservation(RoomDTO newReservationDTO);
         RoomDTO UpdatePutReservation(int id, RoomDTO updatedReservationDto);
-        RoomDTO UpdatePatchReservation(int id, RoomDTO updatedReservationDto);
         string CancelReservation(int id);
     }
 }

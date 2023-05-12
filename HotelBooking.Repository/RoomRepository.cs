@@ -34,11 +34,6 @@ namespace HotelBooking.Repository
             return _inMemoryData.Update(id, updatedReservation);
         }
 
-        public Room UpdatePatchReservation(int id)
-        {
-            return _inMemoryData.GetById(id);
-        }
-
         public string CancelReservation(int id)
         {
             _inMemoryData.Remove(id);

@@ -44,13 +44,6 @@ namespace HotelBooking.Api.Controllers
             return Ok(result);
         }
 
-        [HttpPatch("UpdateAll/{id}")]
-        public ActionResult<RoomDTO> UpdatePatchReservation(int id, [FromBody] RoomDTO roomDTO)
-        {
-            var result = _roomService.UpdatePatchReservation(id, roomDTO);
-            return Ok(result);
-        }
-
         [HttpDelete("Cancel/{id}")]
         public ActionResult<string> CancelReservation(int id)
         {

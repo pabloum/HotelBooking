@@ -43,13 +43,6 @@ namespace HotelBooking.Services.Services
             return _roomRepository.UpdatePutReservation(id, newReservation).MapToRoomDTO();
         }
 
-		public RoomDTO UpdatePatchReservation(int id, RoomDTO updatedReservationDto)
-		{
-            var newReservation = updatedReservationDto.MapToRoom();
-            _reservationValidationService.IsReservationPossible(newReservation);
-            return _roomRepository.UpdatePatchReservation(id).MapToRoomDTO();
-        }
-
 		public string CancelReservation(int id)
 		{
 			return _roomRepository.CancelReservation(id);

@@ -10,7 +10,6 @@ namespace HotelBooking.Repository.Contracts
         Room GetReservationById(int id);
         Room MakeReservation(Room newReservation);
         Room UpdatePutReservation(int id, Room updatedReservation);
-        Room UpdatePatchReservation(int id);
         string CancelReservation(int id);
     }
 }
