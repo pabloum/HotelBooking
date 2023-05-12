@@ -49,7 +49,7 @@ namespace HotelBooking.Services.Services
 		{
 			if (validationErrors.Any())
 			{
-				throw new ValidationError("At least one validation error", validationErrors);
+				throw new ValidationException("At least one validation error", validationErrors);
 			}
 		}
 
@@ -68,7 +68,7 @@ namespace HotelBooking.Services.Services
 		{
             var currentDate = DateTime.Now;
 
-			if (currentDate.AddDays(30).Date > startDate.Date)
+			if (currentDate.AddDays(30).Date < startDate.Date)
 			{
 				return false;
             }

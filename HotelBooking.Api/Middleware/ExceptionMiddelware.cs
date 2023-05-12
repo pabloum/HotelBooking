@@ -17,7 +17,7 @@ namespace HotelBooking.Api.Middleware
             _next = next;
             _statusCode = new Dictionary<Type, HttpStatusCode>
             {
-                { typeof(ValidationError), HttpStatusCode.PreconditionFailed },
+                { typeof(ValidationException), HttpStatusCode.PreconditionFailed },
                 { typeof(Exception), HttpStatusCode.InternalServerError }
             };
         }
@@ -62,7 +62,7 @@ namespace HotelBooking.Api.Middleware
                 return new ApiError(ex.Message, aggEx.InnerExceptions.Select(x => x.Message));
             }
 
-            if (ex is ValidationError valEx)
+            if (ex is ValidationException valEx)
             {
                 return new ApiError(valEx);
             }

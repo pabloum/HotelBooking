@@ -22,7 +22,7 @@ namespace HotelBooking.Api.Models
             Details = null;
         }
 
-        public ApiError(ValidationError validatioError)
+        public ApiError(ValidationException validatioError)
         {
             Type = "Validation error";
             Error = validatioError.Message;
