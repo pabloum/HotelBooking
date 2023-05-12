@@ -12,6 +12,7 @@
     <None Remove="Services\Base\" />
     <None Remove="Providers\" />
     <None Remove="Providers\Contracts\" />
+    <None Remove="Helpers\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />
@@ -19,6 +20,7 @@
     <Folder Include="Services\Base\" />
     <Folder Include="Providers\" />
     <Folder Include="Providers\Contracts\" />
+    <Folder Include="Helpers\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HotelBooking.Repository\HotelBooking.Repository.csproj" />

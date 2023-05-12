@@ -8,6 +8,7 @@ using HotelBooking.Services.Services.Contracts;
 using HotelBooking.Tests.DataFactory;
 using Moq;
 using HotelBooking.Services.Providers.Contracts;
+using HotelBooking.Services.Helpers;
 
 namespace HotelBooking.Tests.Services
 {
@@ -56,9 +57,9 @@ namespace HotelBooking.Tests.Services
 
 			//Act and Assert
 			var ex = Assert.Throws<ValidationException.ValidationException>(() => _reservationValidator.IsReservationPossible(room));
-			Assert.Equal(ex.Message, "At least one validation error");
-			Assert.Equal(ex.ValidationErrors.FirstOrDefault().Message, "The room is occupied in these dates");
+			Assert.Equal(ex.Message, Constants.Error_Generic);
+			Assert.Equal(ex.ValidationErrors.FirstOrDefault().Message, Constants.Error_UnavailableDates);
         }
 	}
 }
-
+    

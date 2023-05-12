@@ -2,6 +2,7 @@
 using HotelBooking.Entities.Domain;
 using HotelBooking.Entities.Exceptions;
 using HotelBooking.Repository.Contracts;
+using HotelBooking.Services.Helpers;
 using HotelBooking.Services.Providers.Contracts;
 using HotelBooking.Services.Services.Contracts;
 
@@ -9,12 +10,6 @@ namespace HotelBooking.Services.Services
 {
 	public class ReservationValidationService : IReservationValidationService
     {
-		private readonly string NonLogicalEndDate = "The end date should be after the start date";
-		private readonly string UnavailableDates = "The room is occupied in these dates";
-		private readonly string MoreThan30DaysInAdvance = "The reservations shouldn't be placed with more than 30 days in advance";
-		private readonly string ReservationMoreThan3Days = "This reservation would take longer than 3 days";
-		private readonly string ReservatioNotForAtLeastNextDayOfBooking = "Your reservations does not start either today or tomorrow";
-
 		private readonly ITimeProvider _timeProvider;
 		private readonly IRoomRepository _roomRepository;
 
@@ -30,27 +25,27 @@ namespace HotelBooking.Services.Services
 
 			if (EndDateIsBeforeStartDate(room.StartReservation, room.EndReservation))
 			{
-				validationErrors.Add(NonLogicalEndDate);
+				validationErrors.Add(Constants.Error_NonLogicalEndDate);
 			}
 
 			if (!AreDatesAvailable(room.StartReservation, room.EndReservation))
 			{
-				validationErrors.Add(UnavailableDates);
+				validationErrors.Add(Constants.Error_UnavailableDates);
 			}
 
 			if (!IsReservationWithLess30DaysInAdvance(room.StartReservation))
 			{
-				validationErrors.Add(MoreThan30DaysInAdvance);
+				validationErrors.Add(Constants.Error_MoreThan30DaysInAdvance);
             }
 
 			if (!IsReservationLessThan3Days(room.StartReservation, room.EndReservation))
 			{
-				validationErrors.Add(ReservationMoreThan3Days);
+				validationErrors.Add(Constants.Error_ReservationMoreThan3Days);
             }
 
             if (!IsReservatioForAtLeastNextDayOfBooking(room.StartReservation))
             {
-				validationErrors.Add(ReservatioNotForAtLeastNextDayOfBooking);
+				validationErrors.Add(Constants.Error_ReservatioNotForAtLeastNextDayOfBooking);
             }
 
 			CheckValidationsAndThrowExceptions(validationErrors);
@@ -62,7 +57,7 @@ namespace HotelBooking.Services.Services
 		{
 			if (validationErrors.Any())
 			{
-				throw new ValidationException("At least one validation error", validationErrors);
+				throw new ValidationException(Constants.Error_Generic, validationErrors);
 			}
 		}
 
