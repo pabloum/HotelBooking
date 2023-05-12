@@ -29,9 +29,9 @@ namespace HotelBooking.Repository
             return _inMemoryData.Add(newReservation);
         }
 
-        public Room UpdatePutReservation(int id)
+        public Room UpdatePutReservation(int id, Room updatedReservation)
         {
-            return _inMemoryData.GetById(id);
+            return _inMemoryData.Update(id, updatedReservation);
         }
 
         public Room UpdatePatchReservation(int id)

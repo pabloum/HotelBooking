@@ -32,6 +32,13 @@ namespace HotelBooking.Repository.InMemoryData
             return _inMemoryRoom.Where(r => r.RoomId == id).FirstOrDefault();
         }
 
+        public Room Update(int id, Room room)
+        {
+            var index = _inMemoryRoom.IndexOf(room);
+            _inMemoryRoom[index] = room;
+            return room;
+        }
+
         public void Remove(int id)
         {
             _inMemoryRoom.RemoveAll(r => r.RoomId == id);
