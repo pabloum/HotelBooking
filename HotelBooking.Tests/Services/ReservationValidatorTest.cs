@@ -115,6 +115,24 @@ namespace HotelBooking.Tests.Services
             Assert.Equal(ex.Message, Constants.Error_Generic);
             Assert.Equal(ex.ValidationErrors.FirstOrDefault().Message, Constants.Error_MoreThan30DaysInAdvance);
         }
+
+        [Fact]
+        public void TestIsReservatioForAtLeastNextDayOfBooking()
+        {
+            //Arrange
+            var room = new Room
+            {
+                StartReservation = new DateTime(2023, 09, 19),
+                EndReservation = new DateTime(2023, 09, 21),
+            };
+
+            //Act and Assert
+            var ex = Assert.Throws<ValidationException.ValidationException>(() => _reservationValidator.IsReservationPossible(room));
+
+            //Assert
+            Assert.Equal(ex.Message, Constants.Error_Generic);
+            Assert.Equal(ex.ValidationErrors.FirstOrDefault().Message, Constants.Error_ReservatioNotForAtLeastNextDayOfBooking);
+        }
     }
 }
     

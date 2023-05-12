@@ -111,7 +111,7 @@ namespace HotelBooking.Services.Services
         {
             var currentDate = _timeProvider.GetCurrentDateTime();
 
-            if (startDate.Date > currentDate.AddDays(1).Date)
+            if (startDate.Date < currentDate.AddDays(1).Date)
 			{
 				return false;
 			}

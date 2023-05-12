@@ -81,13 +81,13 @@ namespace HotelBooking.Tests.Services
         public void TestUpdateReservation()
         {
             //Arrange
-            var newRoom = new Room { StartReservation = new DateTime(2023, 09, 09), EndReservation = new DateTime(2023, 09, 12) };
+            var newRoom = new Room { RoomId = 1, StartReservation = new DateTime(2023, 09, 20), EndReservation = new DateTime(2023, 09, 21) };
             _mockRepository.Setup(r => r.UpdatePutReservation(It.IsAny<int>(), It.IsAny<Room>())).Returns(MockedDataFactory.GetMockedRooms().FirstOrDefault());
             var reservationValidator = new ReservationValidationService(_mockRepository.Object, _timeProviderMock.Object);
             _roomService = new RoomService(_mockRepository.Object, reservationValidator);
 
             //Act
-            var result = _roomService.UpdatePutReservation(2, newRoom.MapToRoomDTO());
+            var result = _roomService.UpdatePutReservation(1, newRoom.MapToRoomDTO());
 
             //Assert
             Assert.NotNull(result);
