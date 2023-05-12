@@ -39,7 +39,6 @@ namespace HotelBooking.Services.Services
 		public RoomDTO UpdatePutReservation(int id, RoomDTO updatedReservationDto)
 		{
             var newReservation = updatedReservationDto.MapToRoom();
-
             _reservationValidationService.IsReservationPossible(newReservation);
             return _roomRepository.UpdatePutReservation(id).MapToRoomDTO();
         }
@@ -47,7 +46,6 @@ namespace HotelBooking.Services.Services
 		public RoomDTO UpdatePatchReservation(int id, RoomDTO updatedReservationDto)
 		{
             var newReservation = updatedReservationDto.MapToRoom();
-
             _reservationValidationService.IsReservationPossible(newReservation);
             return _roomRepository.UpdatePatchReservation(id).MapToRoomDTO();
         }

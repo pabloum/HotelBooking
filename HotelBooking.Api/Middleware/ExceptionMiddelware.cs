@@ -3,6 +3,7 @@ using System.Net;
 using System.Reflection;
 using System.Text.Json;
 using HotelBooking.Api.Models;
+using HotelBooking.Entities.Exceptions;
 
 namespace HotelBooking.Api.Middleware
 {
@@ -16,6 +17,7 @@ namespace HotelBooking.Api.Middleware
             _next = next;
             _statusCode = new Dictionary<Type, HttpStatusCode>
             {
+                { typeof(ValidationError), HttpStatusCode.PreconditionFailed },
                 { typeof(Exception), HttpStatusCode.InternalServerError }
             };
         }
@@ -60,10 +62,10 @@ namespace HotelBooking.Api.Middleware
                 return new ApiError(ex.Message, aggEx.InnerExceptions.Select(x => x.Message));
             }
 
-            //if (ex is AnotherTypeOfException valEx)
-            //{
-            //	return new AnotherTypeOfException();
-            //}
+            if (ex is ValidationError valEx)
+            {
+                return new ApiError(valEx);
+            }
 
             return new ApiError(ex.Message);
         }
