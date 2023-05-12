@@ -28,7 +28,7 @@ namespace HotelBooking.Services.Services
 				validationErrors.Add(Constants.Error_NonLogicalEndDate);
 			}
 
-			if (!AreDatesAvailable(room.StartReservation, room.EndReservation))
+			if (!AreDatesAvailable(room))
 			{
 				validationErrors.Add(Constants.Error_UnavailableDates);
 			}
@@ -57,7 +57,7 @@ namespace HotelBooking.Services.Services
 		{
 			if (validationErrors.Any())
 			{
-				throw new ValidationException(Constants.Error_Generic, validationErrors);
+					throw new ValidationException(Constants.Error_Generic, validationErrors);
 			}
 		}
 
@@ -66,13 +66,17 @@ namespace HotelBooking.Services.Services
 			return endDate.Date <= startDate.Date;
 		}
 
-        private bool AreDatesAvailable(DateTime startDate, DateTime endDate)
+        private bool AreDatesAvailable(Room room)
 		{
 			var allReservations = _roomRepository.SeeReservations();
 
 			foreach (var reservation in allReservations)
 			{
-                if (reservation.StartReservation.Date < endDate.Date && startDate.Date < reservation.EndReservation.Date)
+				var areDatesoverlaping =
+					(reservation.StartReservation.Date < room.EndReservation.Date
+					&& room.StartReservation.Date < reservation.EndReservation.Date);
+
+                if (areDatesoverlaping && room.RoomId != reservation.RoomId)
 				{
 					return false; 
 				}
@@ -107,7 +111,7 @@ namespace HotelBooking.Services.Services
         {
             var currentDate = _timeProvider.GetCurrentDateTime();
 
-            if (startDate > currentDate.AddDays(1))
+            if (startDate.Date > currentDate.AddDays(1).Date)
 			{
 				return false;
 			}

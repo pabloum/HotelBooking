@@ -18,7 +18,7 @@ namespace HotelBooking.Api.Middleware
             _statusCode = new Dictionary<Type, HttpStatusCode>
             {
                 { typeof(ValidationException), HttpStatusCode.PreconditionFailed },
-                { typeof(Exception), HttpStatusCode.InternalServerError }
+                //{ typeof(AnotherTypeOfException), HttpStatusCode.InternalServerError }
             };
         }
 

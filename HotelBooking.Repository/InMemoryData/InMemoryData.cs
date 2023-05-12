@@ -34,7 +34,7 @@ namespace HotelBooking.Repository.InMemoryData
 
         public Room Update(int id, Room room)
         {
-            var index = _inMemoryRoom.IndexOf(room);
+            var index = _inMemoryRoom.FindIndex(r => r.RoomId == id);
             _inMemoryRoom[index] = room;
             return room;
         }
