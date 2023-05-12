@@ -25,9 +25,11 @@
 
   <ItemGroup>
     <None Remove="Services\" />
+    <None Remove="DataFactory\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />
+    <Folder Include="DataFactory\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HotelBooking.Repository\HotelBooking.Repository.csproj" />

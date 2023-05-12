@@ -10,11 +10,15 @@
     <None Remove="Services\" />
     <None Remove="Services\Contracts\" />
     <None Remove="Services\Base\" />
+    <None Remove="Providers\" />
+    <None Remove="Providers\Contracts\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />
     <Folder Include="Services\Contracts\" />
     <Folder Include="Services\Base\" />
+    <Folder Include="Providers\" />
+    <Folder Include="Providers\Contracts\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HotelBooking.Repository\HotelBooking.Repository.csproj" />

@@ -10,16 +10,16 @@ namespace HotelBooking.Api.Models
 
         public ApiError(string message, IEnumerable<string> details)
         {
-            Type = "Validation error";
+            Type = "Multiple errors";
             Error = message;
             Details = details;
         }
 
-        public ApiError(string message) : this(message, new[] { message })
+        public ApiError(string message)
         {
-            Type = "Validation error";
+            Type = "Generic error";
             Error = message;
-            Details = null;
+            Details = new List<object>();
         }
 
         public ApiError(ValidationException validatioError)
