@@ -8,12 +8,12 @@ using HotelBooking.Services.Services.Contracts;
 
 namespace HotelBooking.Services.Services
 {
-	public class ReservationValidationService : IReservationValidationService
+	public class ReservationValidator : IReservationValidationService
     {
 		private readonly ITimeProvider _timeProvider;
 		private readonly IRoomRepository _roomRepository;
 
-        public ReservationValidationService(IRoomRepository roomRepository, ITimeProvider timeProvider)
+        public ReservationValidator(IRoomRepository roomRepository, ITimeProvider timeProvider)
 		{
 			_roomRepository = roomRepository;
 			_timeProvider = timeProvider;

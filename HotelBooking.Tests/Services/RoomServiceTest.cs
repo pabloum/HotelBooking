@@ -30,7 +30,7 @@ namespace HotelBooking.Tests.Services
         {
             //Arrange
             _mockRepository.Setup(r => r.SeeReservations()).Returns(MockedDataFactory.GetMockedRooms());
-            var reservationValidator = new ReservationValidationService(_mockRepository.Object, _timeProviderMock.Object);
+            var reservationValidator = new ReservationValidator(_mockRepository.Object, _timeProviderMock.Object);
             _roomService = new RoomService(_mockRepository.Object, reservationValidator);
 
             //Act
@@ -46,7 +46,7 @@ namespace HotelBooking.Tests.Services
         {
             //Arrange
             _mockRepository.Setup(r => r.GetReservationById(It.IsAny<int>())).Returns(MockedDataFactory.GetMockedRooms().FirstOrDefault());
-            var reservationValidator = new ReservationValidationService(_mockRepository.Object, _timeProviderMock.Object);
+            var reservationValidator = new ReservationValidator(_mockRepository.Object, _timeProviderMock.Object);
             _roomService = new RoomService(_mockRepository.Object, reservationValidator);
 
             //Act
@@ -64,7 +64,7 @@ namespace HotelBooking.Tests.Services
             //Arrange
             var newRoom = new Room { StartReservation = new DateTime(2023, 09, 20), EndReservation = new DateTime(2023, 09, 21) };
             _mockRepository.Setup(r => r.MakeReservation(It.IsAny<Room>())).Returns(MockedDataFactory.GetMockedRooms().FirstOrDefault());
-            var reservationValidator = new ReservationValidationService(_mockRepository.Object, _timeProviderMock.Object);
+            var reservationValidator = new ReservationValidator(_mockRepository.Object, _timeProviderMock.Object);
             _roomService = new RoomService(_mockRepository.Object, reservationValidator);
 
             //Act
@@ -83,7 +83,7 @@ namespace HotelBooking.Tests.Services
             //Arrange
             var newRoom = new Room { RoomId = 1, StartReservation = new DateTime(2023, 09, 20), EndReservation = new DateTime(2023, 09, 21) };
             _mockRepository.Setup(r => r.UpdatePutReservation(It.IsAny<int>(), It.IsAny<Room>())).Returns(MockedDataFactory.GetMockedRooms().FirstOrDefault());
-            var reservationValidator = new ReservationValidationService(_mockRepository.Object, _timeProviderMock.Object);
+            var reservationValidator = new ReservationValidator(_mockRepository.Object, _timeProviderMock.Object);
             _roomService = new RoomService(_mockRepository.Object, reservationValidator);
 
             //Act
@@ -100,7 +100,7 @@ namespace HotelBooking.Tests.Services
         {
             //Arrange
             _mockRepository.Setup(r => r.CancelReservation(It.IsAny<int>())).Returns("Reservation canceled");
-            var reservationValidator = new ReservationValidationService(_mockRepository.Object, _timeProviderMock.Object);
+            var reservationValidator = new ReservationValidator(_mockRepository.Object, _timeProviderMock.Object);
             _roomService = new RoomService(_mockRepository.Object, reservationValidator);
 
             //Act

@@ -24,7 +24,7 @@ namespace HotelBooking.Tests.Services
 			var timeProviderMock = new Mock<ITimeProvider>();
             timeProviderMock.Setup(t => t.GetCurrentDateTime()).Returns(new DateTime(2023,09,19));
 
-            _reservationValidator = new ReservationValidationService(_mockRepository.Object, timeProviderMock.Object);
+            _reservationValidator = new ReservationValidator(_mockRepository.Object, timeProviderMock.Object);
 		}
 
 		[Fact]
