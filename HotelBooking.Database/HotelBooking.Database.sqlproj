@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build">
+  <Sdk Name="Microsoft.Build.Sql" Version="0.1.9-preview" />
+  <PropertyGroup>
+    <Name>HotelBooking.Database</Name>
+    <ProjectGuid>{79FC68A3-EBA5-49C4-BAA6-0E3965BE1B5B}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql160DatabaseSchemaProvider</DSP>
+    <ModelCollation>1033, CI</ModelCollation>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="dbo" />
+    <Folder Include="dbo\Functions" />
+    <Folder Include="dbo\StoredProcedures" />
+    <Folder Include="dbo\Table" />
+    <Folder Include="dbo\Views" />
+    <Folder Include="DeploymentScripts" />
+    <Folder Include="DeploymentScripts\Post" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DeploymentScripts\Post\InsertDefaultDataRoom.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="Script.PostDeployment1.sql" />
+  </ItemGroup>
+  <Target Name="BeforeBuild">
+    <Delete Files="$(BaseIntermediateOutputPath)\project.assets.json" />
+  </Target>
+</Project>
