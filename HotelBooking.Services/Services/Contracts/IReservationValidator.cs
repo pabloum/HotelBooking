@@ -4,7 +4,7 @@ using HotelBooking.Services.Base;
 
 namespace HotelBooking.Services.Services.Contracts
 {
-	public interface IReservationValidationService : IService
+	public interface IReservationValidator : IService
     {
 		bool IsReservationPossible(Room room);
 	}

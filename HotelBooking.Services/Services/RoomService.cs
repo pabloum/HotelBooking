@@ -11,9 +11,9 @@ namespace HotelBooking.Services.Services
 	public class RoomService : IRoomService
     {
 		private readonly IRoomRepository _roomRepository;
-		private readonly IReservationValidationService _reservationValidationService;
+		private readonly IReservationValidator _reservationValidationService;
 
-        public RoomService(IRoomRepository roomRepository, IReservationValidationService reservationValidationService)
+        public RoomService(IRoomRepository roomRepository, IReservationValidator reservationValidationService)
 		{
 			_roomRepository = roomRepository;
 			_reservationValidationService = reservationValidationService;

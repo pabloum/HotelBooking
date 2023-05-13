@@ -14,7 +14,7 @@ namespace HotelBooking.Tests.Services
 {
 	public class ReservationValidatorTest
 	{
-		private IReservationValidationService _reservationValidator;
+		private IReservationValidator _reservationValidator;
 
 		public ReservationValidatorTest()
 		{

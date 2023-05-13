@@ -8,7 +8,7 @@ using HotelBooking.Services.Services.Contracts;
 
 namespace HotelBooking.Services.Services
 {
-	public class ReservationValidator : IReservationValidationService
+	public class ReservationValidator : IReservationValidator
     {
 		private readonly ITimeProvider _timeProvider;
 		private readonly IRoomRepository _roomRepository;
@@ -73,8 +73,8 @@ namespace HotelBooking.Services.Services
 			foreach (var reservation in allReservations)
 			{
 				var areDatesoverlaping =
-					(reservation.StartReservation.Date < room.EndReservation.Date
-					&& room.StartReservation.Date < reservation.EndReservation.Date);
+					(reservation.StartReservation.Date <= room.EndReservation.Date
+					&& room.StartReservation.Date <= reservation.EndReservation.Date);
 
                 if (areDatesoverlaping && room.RoomId != reservation.RoomId)
 				{
