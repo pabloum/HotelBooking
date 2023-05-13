@@ -28,6 +28,7 @@ namespace HotelBooking.Api.Installers
 
         public static void InjectAdditionalInterfaces(this IServiceCollection services)
         {
+            services.AddScoped<DbContext, HotelBookingDbContext>();
             services.AddSingleton<IInMemoryData, InMemoryData>();
         }
     }
