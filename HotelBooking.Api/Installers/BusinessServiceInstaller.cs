@@ -1,5 +1,5 @@
 ﻿using System;
-using HotelBooking.Repository.InMemoryData;
+using HotelBooking.Persistence.InMemoryData;
 using HotelBooking.Repository.Base;
 using HotelBooking.Services.Base;
 using HotelBooking.Services.Providers.Contracts;

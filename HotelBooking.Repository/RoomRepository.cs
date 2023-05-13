@@ -1,7 +1,7 @@
 ﻿using System;
 using HotelBooking.Entities.Domain;
 using HotelBooking.Repository.Contracts;
-using HotelBooking.Repository.InMemoryData;
+using HotelBooking.Persistence.InMemoryData;
 
 namespace HotelBooking.Repository
 {

@@ -7,15 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Base\" />
-    <None Remove="Contracts\" />
+    <None Remove="InMemoryData\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Base\" />
-    <Folder Include="Contracts\" />
+    <Folder Include="InMemoryData\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HotelBooking.Entities\HotelBooking.Entities.csproj" />
-    <ProjectReference Include="..\HotelBooking.Persistence\HotelBooking.Persistence.csproj" />
   </ItemGroup>
 </Project>

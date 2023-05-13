@@ -1,7 +1,8 @@
 ﻿using System;
 using HotelBooking.Entities.Domain;
+using HotelBooking.Persistence.InMemoryData;
 
-namespace HotelBooking.Repository.InMemoryData
+namespace HotelBooking.Persistence.InMemoryData
 {
     public class InMemoryData : IInMemoryData
     {
