@@ -25,7 +25,7 @@ namespace HotelBooking.Api
                 c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Last hotel in Cancun Booking", Version = "v1" });
             });
 
-            services.AddBusinessServices();
+            services.AddBusinessServices(configRoot);
             services.InjectAdditionalInterfaces();
         }
 
@@ -42,7 +42,7 @@ namespace HotelBooking.Api
                 app.UseHttpsRedirection();
             }
 
-            app.UseCors("MyAllowSpecificationOrigins");
+            app.UseCors("AllowSpecificOrigins");
 
             //app.UseAuthentication();
             //app.UseAuthorization();
