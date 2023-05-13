@@ -22,27 +22,55 @@ namespace HotelBooking.Repository
 
         public IEnumerable<Room> SeeReservations()
         {
-            return _useDataBase ? DbSet : _inMemoryData.GetAll();
+
+            return _useDataBase ? DbSet.AsNoTracking() : _inMemoryData.GetAll();
         }
 
         public Room GetReservationById(int id)
         {
-            return _useDataBase ? DbSet.Where(r => r.RoomId == id).FirstOrDefault() : _inMemoryData.GetById(id);
+            return _useDataBase ? DbSet.Where(r => r.RoomId == id).AsNoTracking().FirstOrDefault() : _inMemoryData.GetById(id);
         }
 
         public Room MakeReservation(Room newReservation)
         {
-            return _inMemoryData.Add(newReservation);
+            if (_useDataBase)
+            {
+                var added = DbSet.Add(newReservation);
+                _context.SaveChanges();
+                return added.Entity;
+            }
+            else
+            {
+                return _inMemoryData.Add(newReservation);
+            }
         }
 
         public Room UpdatePutReservation(int id, Room updatedReservation)
         {
-            return _inMemoryData.Update(id, updatedReservation);
+            if (_useDataBase)
+            {
+                var added = DbSet.Update(updatedReservation);
+                _context.SaveChanges();
+                return added.Entity;
+            }
+            else
+            {
+                return _inMemoryData.Update(id, updatedReservation);
+            }
         }
 
         public string CancelReservation(int id)
         {
-            _inMemoryData.Remove(id);
+            if (_useDataBase)
+            {
+                DbSet.Remove(GetReservationById(id));
+                _context.SaveChanges();
+            }
+            else
+            {
+                _inMemoryData.Remove(id);
+            }
+
             return "Reservation canceled";
         }
     }
