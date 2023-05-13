@@ -21,14 +21,12 @@ namespace HotelBooking.Api.Installers
 
             using (var context = services.BuildServiceProvider().GetRequiredService<HotelBookingDbContext>())
             {
-                // Create the database if it doesn't exist
                 context.Database.EnsureCreated();
             }
         }
 
         public static void InjectAdditionalInterfaces(this IServiceCollection services)
         {
-            services.AddScoped<DbContext, HotelBookingDbContext>();
             services.AddSingleton<IInMemoryData, InMemoryData>();
         }
     }

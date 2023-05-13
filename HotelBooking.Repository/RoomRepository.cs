@@ -2,18 +2,19 @@
 using HotelBooking.Repository.Contracts;
 using HotelBooking.Persistence.InMemoryData;
 using Microsoft.EntityFrameworkCore;
+using HotelBooking.Persistence.Context;
 
 namespace HotelBooking.Repository
 {
     public class RoomRepository : IRoomRepository
 	{
-        private readonly DbContext _context;
+        private readonly HotelBookingDbContext _context;
         private readonly bool _useDataBase;
         private IInMemoryData _inMemoryData;
 
         private DbSet<Room> DbSet => _context.Set<Room>();
 
-        public RoomRepository(DbContext context, IInMemoryData inMemoryData)
+        public RoomRepository(HotelBookingDbContext context, IInMemoryData inMemoryData)
         {
             _context = context;
             _inMemoryData = inMemoryData;
