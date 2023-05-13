@@ -1,5 +1,4 @@
-﻿using System;
-using HotelBooking.Persistence.Context;
+﻿using HotelBooking.Persistence.Context;
 using HotelBooking.Persistence.InMemoryData;
 using HotelBooking.Repository.Base;
 using HotelBooking.Services.Base;
@@ -12,6 +11,8 @@ namespace HotelBooking.Api.Installers
     {
         public static void AddBusinessServices(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddSingleton<IConfiguration>(configuration);
+
             services.RegisterAllDirectImplementations<IService>(ServiceLifetime.Scoped);
             services.RegisterAllDirectImplementations<IRepository>(ServiceLifetime.Scoped);
             services.RegisterAllDirectImplementations<IProvider>(ServiceLifetime.Scoped);

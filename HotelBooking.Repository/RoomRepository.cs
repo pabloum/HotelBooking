@@ -3,6 +3,7 @@ using HotelBooking.Repository.Contracts;
 using HotelBooking.Persistence.InMemoryData;
 using Microsoft.EntityFrameworkCore;
 using HotelBooking.Persistence.Context;
+using Microsoft.Extensions.Configuration;
 
 namespace HotelBooking.Repository
 {
@@ -14,11 +15,12 @@ namespace HotelBooking.Repository
 
         private DbSet<Room> DbSet => _context.Set<Room>();
 
-        public RoomRepository(HotelBookingDbContext context, IInMemoryData inMemoryData)
+        public RoomRepository(HotelBookingDbContext context, IInMemoryData inMemoryData, IConfiguration configuration)
         {
             _context = context;
             _inMemoryData = inMemoryData;
-            _useDataBase = true;
+
+            _useDataBase = configuration.GetSection("UseDataBase").Value == "True";
         }
 
         public IEnumerable<Room> SeeReservations()
