@@ -2,6 +2,19 @@
 
 This is an API built for a challenge. You may read the challenge in the next section. You may also find instructions to run the api locally
 
+
+## How to Run the App
+
+Locally you need to install Visual Studio , and .Net Core 7.0. 
+Once you build it and run it, you may be able to see a Swagger UI page. 
+
+You can use In Memory Data or an Actual Database, by setting the key "UseDataBase" in tha appsettings.json to either True or False.
+
+If you want to use the database you can Publish the database project in your local machine. SQL Server was the database engine chosen for this project. 
+
+Take into account that tha .sqlproj is independent from the dotnet solution. 
+
+
 ## CHALLENGE
 
 ### Post-Covid scenario:
@@ -20,8 +33,3 @@ The requirements are:
 - To simplify the use case, a “DAY’ in the hotel room starts from 00:00 to 23:59:59.
 - Every end-user can check the room availability, place a reservation, cancel it or modify it.
 - To simplify the API is insecure.
-
-## How to Run the App
-
-Locally you need to install Visual Studio , and .Net Core 7.0. 
-Once you build it and run it, you may be able to see a Swagger UI page. 
