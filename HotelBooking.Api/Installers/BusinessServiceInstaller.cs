@@ -20,9 +20,12 @@ namespace HotelBooking.Api.Installers
             services.AddDbContext<HotelBookingDbContext>(options =>
                 options.UseSqlServer(configuration.GetValue<string>("ConnectionStrings:HotelBookinDatabase")));
 
-            using (var context = services.BuildServiceProvider().GetRequiredService<HotelBookingDbContext>())
+            if (configuration.GetValue<bool>("UseDataBase"))
             {
-                context.Database.EnsureCreated();
+                using (var context = services.BuildServiceProvider().GetRequiredService<HotelBookingDbContext>())
+                {
+                    context.Database.EnsureCreated();
+                }
             }
         }
 

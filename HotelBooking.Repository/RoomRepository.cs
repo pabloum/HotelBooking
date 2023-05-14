@@ -13,7 +13,7 @@ namespace HotelBooking.Repository
         private readonly bool _useDataBase;
         private IInMemoryData _inMemoryData;
 
-        private DbSet<Room> DbSet => _context.Set<Room>();
+        private readonly DbSet<Room> DbSet;
 
         public RoomRepository(HotelBookingDbContext context, IInMemoryData inMemoryData, IConfiguration configuration)
         {
@@ -21,6 +21,8 @@ namespace HotelBooking.Repository
             _inMemoryData = inMemoryData;
 
             _useDataBase = configuration.GetSection("UseDataBase").Value == "True";
+
+            if (_useDataBase) { DbSet = _context.Set<Room>(); }
         }
 
         public IEnumerable<Room> SeeReservations()
