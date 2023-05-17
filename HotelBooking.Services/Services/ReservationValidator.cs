@@ -50,19 +50,11 @@ namespace HotelBooking.Services.Services
 		{
 			var allReservations = _roomRepository.SeeReservations();
 
-			foreach (var reservation in allReservations)
-			{
-				var areDatesoverlaping =
-					(reservation.StartReservation.Date <= room.EndReservation.Date
-					&& room.StartReservation.Date <= reservation.EndReservation.Date);
-
-                if (areDatesoverlaping && room.RoomId != reservation.RoomId)
-				{
-					return false;
-				}
-			}
-
-			return true;
+			return !allReservations.Where(reservation =>
+					   reservation.StartReservation.Date <= room.EndReservation.Date
+					&& room.StartReservation.Date <= reservation.EndReservation.Date
+					&& room.RoomId != reservation.RoomId)
+					.Any();
 		}
 
 		private bool IsReservationWithMore30DaysInAdvance(DateTime startDate)
