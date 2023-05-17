@@ -21,44 +21,28 @@ namespace HotelBooking.Services.Services
 
 		public bool IsReservationPossible(Room room)
 		{
-			var validationErrors = new List<string>();
+			var validationErrors = new Dictionary<string, bool>();
 
-			if (EndDateIsBeforeStartDate(room.StartReservation, room.EndReservation))
-			{
-				validationErrors.Add(Constants.Error_NonLogicalEndDate);
-			}
+			var isEndDateBeforeStartDate = EndDateIsBeforeStartDate(room.StartReservation, room.EndReservation);
+			var areDatesUnvailable = !AreDatesAvailable(room);
+			var isReservationMoreThan30days = IsReservationWithMore30DaysInAdvance(room.StartReservation);
+			var isReservationLongerThan3Days = IsReservationLongerThan3Days(room.StartReservation, room.EndReservation);
+			var isReservationNotForAtLeastNextDay = IsReservatioNotForAtLeastNextDayOfBooking(room.StartReservation);
 
-			if (!AreDatesAvailable(room))
-			{
-				validationErrors.Add(Constants.Error_UnavailableDates);
-			}
+			validationErrors.Add(Constants.Error_NonLogicalEndDate, isEndDateBeforeStartDate);
+			validationErrors.Add(Constants.Error_UnavailableDates, areDatesUnvailable);
+			validationErrors.Add(Constants.Error_MoreThan30DaysInAdvance, isReservationMoreThan30days);
+			validationErrors.Add(Constants.Error_ReservationMoreThan3Days, isReservationLongerThan3Days);
+			validationErrors.Add(Constants.Error_ReservatioNotForAtLeastNextDayOfBooking, isReservationNotForAtLeastNextDay);
 
-			if (!IsReservationWithLess30DaysInAdvance(room.StartReservation))
-			{
-				validationErrors.Add(Constants.Error_MoreThan30DaysInAdvance);
-            }
+			var errors = validationErrors.Where(x => x.Value).Select(x => x.Key);
 
-			if (!IsReservationLessThan3Days(room.StartReservation, room.EndReservation))
-			{
-				validationErrors.Add(Constants.Error_ReservationMoreThan3Days);
-            }
-
-            if (!IsReservatioForAtLeastNextDayOfBooking(room.StartReservation))
+            if (errors.Any())
             {
-				validationErrors.Add(Constants.Error_ReservatioNotForAtLeastNextDayOfBooking);
+                throw new ValidationException(Constants.Error_Generic, errors);
             }
-
-			CheckValidationsAndThrowExceptions(validationErrors);
 
             return true;
-		}
-
-		private void CheckValidationsAndThrowExceptions(IEnumerable<string> validationErrors)
-		{
-			if (validationErrors.Any())
-			{
-					throw new ValidationException(Constants.Error_Generic, validationErrors);
-			}
 		}
 
         private bool EndDateIsBeforeStartDate(DateTime startDate, DateTime endDate)
@@ -78,45 +62,28 @@ namespace HotelBooking.Services.Services
 
                 if (areDatesoverlaping && room.RoomId != reservation.RoomId)
 				{
-					return false; 
+					return false;
 				}
 			}
 
 			return true;
 		}
 
-		private bool IsReservationWithLess30DaysInAdvance(DateTime startDate)
+		private bool IsReservationWithMore30DaysInAdvance(DateTime startDate)
 		{
             var currentDate = _timeProvider.GetCurrentDateTime();
-
-			if (currentDate.AddDays(30).Date < startDate.Date)
-			{
-				return false;
-            }
-
-            return true;
+			return currentDate.AddDays(30).Date <= startDate.Date;
 		}
 
-		private bool IsReservationLessThan3Days(DateTime startDate, DateTime endDate)
+		private bool IsReservationLongerThan3Days(DateTime startDate, DateTime endDate)
         {
-            if (endDate - startDate > new TimeSpan(3,0,0,0))
-            {
-				return false;
-            }
-
-            return true;
+			return endDate - startDate > new TimeSpan(3, 0, 0, 0);
         }
 
-        private bool IsReservatioForAtLeastNextDayOfBooking(DateTime startDate)
+        private bool IsReservatioNotForAtLeastNextDayOfBooking(DateTime startDate)
         {
             var currentDate = _timeProvider.GetCurrentDateTime();
-
-            if (startDate.Date < currentDate.AddDays(1).Date)
-			{
-				return false;
-			}
-
-            return true;
+			return startDate.Date < currentDate.AddDays(1).Date;
         }
     }
 }
