@@ -21,19 +21,15 @@ namespace HotelBooking.Services.Services
 
 		public bool IsReservationPossible(Room room)
 		{
-			var validationErrors = new Dictionary<string, bool>();
+			var validationErrors = new Dictionary<string, bool>()
+			{
+				{ Constants.Error_NonLogicalEndDate, EndDateIsBeforeStartDate(room.StartReservation, room.EndReservation) },
+				{ Constants.Error_UnavailableDates, !AreDatesAvailable(room) },
+				{ Constants.Error_MoreThan30DaysInAdvance, IsReservationWithMore30DaysInAdvance(room.StartReservation) },
+				{ Constants.Error_ReservationMoreThan3Days, IsReservationLongerThan3Days(room.StartReservation, room.EndReservation) },
+				{ Constants.Error_ReservatioNotForAtLeastNextDayOfBooking, IsReservatioNotForAtLeastNextDayOfBooking(room.StartReservation) },
+			};
 
-			var isEndDateBeforeStartDate = EndDateIsBeforeStartDate(room.StartReservation, room.EndReservation);
-			var areDatesUnvailable = !AreDatesAvailable(room);
-			var isReservationMoreThan30days = IsReservationWithMore30DaysInAdvance(room.StartReservation);
-			var isReservationLongerThan3Days = IsReservationLongerThan3Days(room.StartReservation, room.EndReservation);
-			var isReservationNotForAtLeastNextDay = IsReservatioNotForAtLeastNextDayOfBooking(room.StartReservation);
-
-			validationErrors.Add(Constants.Error_NonLogicalEndDate, isEndDateBeforeStartDate);
-			validationErrors.Add(Constants.Error_UnavailableDates, areDatesUnvailable);
-			validationErrors.Add(Constants.Error_MoreThan30DaysInAdvance, isReservationMoreThan30days);
-			validationErrors.Add(Constants.Error_ReservationMoreThan3Days, isReservationLongerThan3Days);
-			validationErrors.Add(Constants.Error_ReservatioNotForAtLeastNextDayOfBooking, isReservationNotForAtLeastNextDay);
 
 			var errors = validationErrors.Where(x => x.Value).Select(x => x.Key);
 
