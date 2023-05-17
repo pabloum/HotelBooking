@@ -37,11 +37,8 @@ namespace HotelBooking.Tests.Services
 				EndReservation = new DateTime(2023,09,22),
             };
 
-			//Act
-			var result = _reservationValidator.IsReservationPossible(room);
-
-			//Assert
-			Assert.True(result);
+			//Act && Assert (If no exception is thrown, then the test passes)
+            _reservationValidator.IsReservationPossible(room);
         }
 
 		[Fact]

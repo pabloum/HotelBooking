@@ -6,6 +6,6 @@ namespace HotelBooking.Services.Services.Contracts
 {
 	public interface IReservationValidator : IService
     {
-		bool IsReservationPossible(Room room);
+		void IsReservationPossible(Room room);
 	}
 }

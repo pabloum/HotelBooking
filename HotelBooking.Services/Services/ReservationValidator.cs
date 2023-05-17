@@ -19,7 +19,7 @@ namespace HotelBooking.Services.Services
 			_timeProvider = timeProvider;
         }
 
-		public bool IsReservationPossible(Room room)
+		public void IsReservationPossible(Room room)
 		{
 			var validationErrors = new Dictionary<string, bool>()
 			{
@@ -30,15 +30,12 @@ namespace HotelBooking.Services.Services
 				{ Constants.Error_ReservatioNotForAtLeastNextDayOfBooking, IsReservatioNotForAtLeastNextDayOfBooking(room.StartReservation) },
 			};
 
-
 			var errors = validationErrors.Where(x => x.Value).Select(x => x.Key);
 
             if (errors.Any())
             {
                 throw new ValidationException(Constants.Error_Generic, errors);
             }
-
-            return true;
 		}
 
         private bool EndDateIsBeforeStartDate(DateTime startDate, DateTime endDate)
@@ -50,10 +47,10 @@ namespace HotelBooking.Services.Services
 		{
 			var allReservations = _roomRepository.SeeReservations();
 
-			return !allReservations.Where(reservation =>
-					   reservation.StartReservation.Date <= room.EndReservation.Date
-					&& room.StartReservation.Date <= reservation.EndReservation.Date
-					&& room.RoomId != reservation.RoomId)
+			return !allReservations.Where(r =>
+					   r.StartReservation.Date <= room.EndReservation.Date
+					&& room.StartReservation.Date <= r.EndReservation.Date
+					&& room.RoomId != r.RoomId)
 					.Any();
 		}
 
