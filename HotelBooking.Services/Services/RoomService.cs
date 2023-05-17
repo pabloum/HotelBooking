@@ -1,6 +1,4 @@
-﻿using System;
-using HotelBooking.Entities.Domain;
-using HotelBooking.Entities.DTO;
+﻿using HotelBooking.Entities.DTO;
 using HotelBooking.Entities.Exceptions;
 using HotelBooking.Entities.Mappers;
 using HotelBooking.Repository.Contracts;
@@ -11,12 +9,12 @@ namespace HotelBooking.Services.Services
 	public class RoomService : IRoomService
     {
 		private readonly IRoomRepository _roomRepository;
-		private readonly IReservationValidator _reservationValidationService;
+		private readonly IReservationValidator _reservationValidator;
 
-        public RoomService(IRoomRepository roomRepository, IReservationValidator reservationValidationService)
+        public RoomService(IRoomRepository roomRepository, IReservationValidator reservationValidator)
 		{
 			_roomRepository = roomRepository;
-			_reservationValidationService = reservationValidationService;
+			_reservationValidator = reservationValidator;
         }
 
 		public IEnumerable<RoomDTO> SeeReservations()
@@ -32,7 +30,7 @@ namespace HotelBooking.Services.Services
 		public RoomDTO MakeReservation(RoomDTO newReservationDto)
 		{
 			var newReservation = newReservationDto.MapToRoom();
-			_reservationValidationService.IsReservationPossible(newReservation);
+			_reservationValidator.IsReservationPossible(newReservation);
 			return _roomRepository.MakeReservation(newReservation).MapToRoomDTO();
 			
         }
@@ -45,7 +43,7 @@ namespace HotelBooking.Services.Services
 			}
 
             var newReservation = updatedReservationDto.MapToRoom();
-            _reservationValidationService.IsReservationPossible(newReservation);
+            _reservationValidator.IsReservationPossible(newReservation);
             return _roomRepository.UpdatePutReservation(id, newReservation).MapToRoomDTO();
         }
 
