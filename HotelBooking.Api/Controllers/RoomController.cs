@@ -34,7 +34,7 @@ namespace HotelBooking.Api.Controllers
         public ActionResult<RoomDTO> MakeReservation([FromBody]RoomDTO roomDTO)
         {
             var result = _roomService.MakeReservation(roomDTO);
-            return Ok(result);
+            return Created("Created", result);
         }
 
         [HttpPut("Update/{id}")]

@@ -24,7 +24,7 @@ namespace HotelBooking.Services.Services
 			var validationErrors = new Dictionary<string, bool>()
 			{
 				{ Constants.Error_NonLogicalEndDate, EndDateIsBeforeStartDate(room.StartReservation, room.EndReservation) },
-				{ Constants.Error_UnavailableDates, !AreDatesAvailable(room) },
+				{ Constants.Error_UnavailableDates, AreDatesUnavailable(room) },
 				{ Constants.Error_MoreThan30DaysInAdvance, IsReservationWithMore30DaysInAdvance(room.StartReservation) },
 				{ Constants.Error_ReservationMoreThan3Days, IsReservationLongerThan3Days(room.StartReservation, room.EndReservation) },
 				{ Constants.Error_ReservatioNotForAtLeastNextDayOfBooking, IsReservatioNotForAtLeastNextDayOfBooking(room.StartReservation) },
@@ -43,11 +43,11 @@ namespace HotelBooking.Services.Services
 			return endDate.Date <= startDate.Date;
 		}
 
-        private bool AreDatesAvailable(Room room)
+        private bool AreDatesUnavailable(Room room)
 		{
 			var allReservations = _roomRepository.SeeReservations();
 
-			return !allReservations.Where(r =>
+			return allReservations.Where(r =>
 					   r.StartReservation.Date <= room.EndReservation.Date
 					&& room.StartReservation.Date <= r.EndReservation.Date
 					&& room.RoomId != r.RoomId)
